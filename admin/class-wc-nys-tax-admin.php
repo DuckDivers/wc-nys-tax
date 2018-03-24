@@ -95,7 +95,7 @@ class Wc_Nys_Tax_Admin {
 		 * between the defined hooks and the functions defined in this
 		 * class.
 		 */
-
+        wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/jquery.dataTables.min.js', array('jquery'), '1.10.15', false);
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/wc-nys-tax-admin.js', array( 'jquery' ), $this->version, false );
 
 	}
@@ -119,5 +119,5 @@ class Wc_Nys_Tax_Admin {
     public function display_main_page() {
         include_once 'partials/wc-nys-tax-admin-display.php';
     }
-
+    
 }

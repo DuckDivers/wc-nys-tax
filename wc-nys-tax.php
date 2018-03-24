@@ -8,7 +8,7 @@
  * @wordpress-plugin
  * Plugin Name:       WC NYS Sales Tax Jurisdictions
  * Plugin URI:        https://www.duckdiverllc.com
- * Description:       This is a short description of what the plugin does. It's displayed in the WordPress admin area.
+ * Description:       Adds the New York State Tax Jurisdictions to the ordering process, and creates a simple sales tax report with breakdowns by taxing jurisdiction
  * Version:           1.0.0
  * Author:            Howard Ehrenberg
  * Author URI:        https://www.howardehrenberg.com
@@ -16,6 +16,8 @@
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
  * Text Domain:       wc-nys-tax
  * Domain Path:       /languages
+ * WC requires at least: 2.2
+ * WC tested up to: 3.3
  */
 
 // If this file is called directly, abort.

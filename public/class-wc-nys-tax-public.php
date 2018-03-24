@@ -99,5 +99,34 @@ class Wc_Nys_Tax_Public {
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/wc-nys-tax-public.js', array( 'jquery' ), $this->version, false );
 
 	}
+    
+     public function add_wc_hooks($order_id){
+        global $woocommerce, $wpdb;
+         
+         $order = wc_get_order($order_id);
+         
+         if ($order){
+//             echo '<pre>'; print_r($order); echo '</pre>';
+             if ($order->get_shipping_postcode()){
+                $zip = $order->get_shipping_postcode();
+                $state = $order->get_shipping_state(); 
+             }
+             else {
+                 $zip = $order->get_billing_postcode();
+                 $state = $order->get_billing_state();
+             }
+            $table = $wpdb->prefix . 'ny_tax';
+            $nycode = $wpdb->get_row("SELECT * from `{$table}` WHERE `zipcode` = {$zip}", ARRAY_A);
+            if (null !== $nycode) {
+                
+                $order->update_meta_data('_nys_jurisdiction', $nycode['region']);   
+                $order->save();
+
+            }
+         
+         }
+    
+     }
+
 
 }
