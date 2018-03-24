@@ -99,5 +99,25 @@ class Wc_Nys_Tax_Admin {
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/wc-nys-tax-admin.js', array( 'jquery' ), $this->version, false );
 
 	}
+    
+    /**
+	 * Add an Submenu page under the WooCommerce submenu
+	 *
+	 * @since  1.0.0
+	 */
+	public function add_submenu_page() {
+		$this->plugin_screen_hook_suffix = add_submenu_page(
+            'woocommerce',
+            'NY Sales Tax Reports',
+            'NY Sales Tax',
+            'manage_woocommerce',
+			$this->plugin_name,
+			array( $this, 'display_main_page' )
+		);
+	}
+    
+    public function display_main_page() {
+        include_once 'partials/wc-nys-tax-admin-display.php';
+    }
 
 }

@@ -67,8 +67,8 @@ class Wc_Nys_Tax {
 	 * @since    1.0.0
 	 */
 	public function __construct() {
-		if ( defined( 'PLUGIN_NAME_VERSION' ) ) {
-			$this->version = PLUGIN_NAME_VERSION;
+		if ( defined( 'DD_WC_TAX_VERSION' ) ) {
+			$this->version = DD_WC_TAX_VERSION;
 		} else {
 			$this->version = '1.0.0';
 		}
@@ -156,7 +156,7 @@ class Wc_Nys_Tax {
 
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
-
+        $this->loader->add_action( 'admin_menu', $plugin_admin, 'add_submenu_page');
 	}
 
 	/**
