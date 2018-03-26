@@ -16,12 +16,16 @@ $wc_report = new WC_Admin_Report();
 
 if (!isset($_GET['range'])){$current_range = 'month';} else {$current_range=$_GET['range'];}
 
-$nonce = $wc_report->check_current_range_nonce($current_range);
+if ( 'custom' == $current_range ) {
+      if ( ! isset( $_GET['wc_reports_nonce'] ) || ! wp_verify_nonce( $_GET['wc_reports_nonce'], 'custom_range' ) ) {
+      wp_safe_redirect( remove_query_arg( array( 'start_date', 'end_date', 'range', 'wc_reports_nonce' ) ) );
+      exit;
+    }
+}
 
-$reporObject = $wc_report->calculate_current_range($current_range);
-$startdate = ($wc_report->start_date);
-$enddate = ($wc_report->end_date);
-
+$Object = $wc_report->calculate_current_range($current_range);
+$startdate = $wc_report->start_date;
+$enddate = $wc_report->end_date;
 $startdate = gmdate("Y-m-d" , $startdate);
 $enddate = gmdate("Y-m-d", $enddate);
 
