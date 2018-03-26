@@ -58,3 +58,4 @@ dw_php_codehinting.config
 custom.less.cache
 *.cache
 
+wp_kaql_ny_tax.sql
