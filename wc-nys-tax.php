@@ -25,6 +25,23 @@ if ( ! defined( 'WPINC' ) ) {
 	die;
 }
 
+// WC version check
+if ( ! in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) || version_compare( get_option( 'woocommerce_db_version' ), '2.4.0', '<' ) ) {
+	function wc_nys_tax_outdated_version_notice() {
+		$message = sprintf(
+		/* translators: Placeholders: %1$s and %2$s are <strong> tags. %3$s and %4$s are <a> tags */
+			esc_html__( '%1$sWC Sales Tax Report is inactive.%2$s This plugin requires WooCommerce 2.4 or newer. Please %3$supdate WooCommerce to version 2.4 or newer%4$s.', 'wc-nys-tax' ),
+			'<strong>',
+			'</strong>',
+			'<a href="' . admin_url( 'plugins.php' ) . '">',
+			'&nbsp;&raquo;</a>'
+		);
+		echo sprintf( '<div class="error"><p>%s</p></div>', $message );
+	}
+	add_action( 'admin_notices', 'wc_nys_tax_outdated_version_notice' );
+	return;
+}
+
 /**
  * Currently plugin version.
  * Start at version 1.0.0 and use SemVer - https://semver.org

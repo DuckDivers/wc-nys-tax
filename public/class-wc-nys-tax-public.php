@@ -55,58 +55,17 @@ class Wc_Nys_Tax_Public {
 	}
 
 	/**
-	 * Register the stylesheets for the public-facing side of the site.
+	 * Register the hooks for hooking into WooCommerce to add the order meta for the public-facing side of the site.
 	 *
 	 * @since    1.0.0
 	 */
-	public function enqueue_styles() {
 
-		/**
-		 * This function is provided for demonstration purposes only.
-		 *
-		 * An instance of this class should be passed to the run() function
-		 * defined in Wc_Nys_Tax_Loader as all of the hooks are defined
-		 * in that particular class.
-		 *
-		 * The Wc_Nys_Tax_Loader will then create the relationship
-		 * between the defined hooks and the functions defined in this
-		 * class.
-		 */
-
-		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/wc-nys-tax-public.css', array(), $this->version, 'all' );
-
-	}
-
-	/**
-	 * Register the JavaScript for the public-facing side of the site.
-	 *
-	 * @since    1.0.0
-	 */
-	public function enqueue_scripts() {
-
-		/**
-		 * This function is provided for demonstration purposes only.
-		 *
-		 * An instance of this class should be passed to the run() function
-		 * defined in Wc_Nys_Tax_Loader as all of the hooks are defined
-		 * in that particular class.
-		 *
-		 * The Wc_Nys_Tax_Loader will then create the relationship
-		 * between the defined hooks and the functions defined in this
-		 * class.
-		 */
-
-		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/wc-nys-tax-public.js', array( 'jquery' ), $this->version, false );
-
-	}
-    
      public function add_wc_hooks($order_id){
         global $woocommerce, $wpdb;
          
          $order = wc_get_order($order_id);
          
          if ($order){
-//             echo '<pre>'; print_r($order); echo '</pre>';
              if ($order->get_shipping_postcode()){
                 $zip = $order->get_shipping_postcode();
                 $state = $order->get_shipping_state(); 
@@ -127,6 +86,5 @@ class Wc_Nys_Tax_Public {
          }
     
      }
-
 
 }
