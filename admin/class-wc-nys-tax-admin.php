@@ -61,20 +61,8 @@ class Wc_Nys_Tax_Admin {
 	 */
 	public function enqueue_styles() {
 
-		/**
-		 * This function is provided for demonstration purposes only.
-		 *
-		 * An instance of this class should be passed to the run() function
-		 * defined in Wc_Nys_Tax_Loader as all of the hooks are defined
-		 * in that particular class.
-		 *
-		 * The Wc_Nys_Tax_Loader will then create the relationship
-		 * between the defined hooks and the functions defined in this
-		 * class.
-		 */
-
 		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/wc-nys-tax-admin.css', array(), $this->version, 'all' );
-        wp_enqueue_style( 'jquery-ui-style', 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.9.0/themes/base/jquery-ui.css',false,"1.9.0",false);
+        wp_enqueue_style( $this->plugin_name . 'jquery-ui-style', '//ajax.googleapis.com/ajax/libs/jqueryui/1.9.0/themes/base/jquery-ui.css',false,"1.9.0",false);
 
 	}
 

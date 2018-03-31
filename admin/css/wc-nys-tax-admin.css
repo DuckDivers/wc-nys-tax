@@ -83,8 +83,9 @@ tr > td:last-child, tr > th:last-child {
 }
 .inside .stats_range ul li.custom {
     position: relative;
-    top: 8px;
-    left: 10px;
+    top: 0;
+    left: 0;
+    padding: 9px 12px 9px;
 }
 .inside .stats_range ul li a{
     border-right: 1px solid #dfdfdf;
@@ -94,4 +95,8 @@ tr > td:last-child, tr > th:last-child {
 }
 .inline {
     display: inline;
+}
+li.time.active a, li.custom.active {
+    background: #0184ba78;
+    color: #000;
 }

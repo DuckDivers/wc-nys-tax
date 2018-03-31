@@ -16,11 +16,15 @@ $wc_report = new WC_Admin_Report();
 
 if (!isset($_GET['range'])){$current_range = 'month';} else {$current_range=$_GET['range'];}
 
-$nonce = $wc_report->check_current_range_nonce($current_range);
-
-$reporObject = $wc_report->calculate_current_range($current_range);
-$startdate = ($wc_report->start_date);
-$enddate = ($wc_report->end_date);
+if ( 'custom' == $current_range ) {
+      if ( ! isset( $_GET['wc_reports_nonce'] ) || ! wp_verify_nonce( $_GET['wc_reports_nonce'], 'custom_range' ) ) {
+      wp_safe_redirect( remove_query_arg( array( 'start_date', 'end_date', 'range', 'wc_reports_nonce' ) ) );
+      exit;
+    }
+}
+$Object = $wc_report->calculate_current_range($current_range);
+$startdate = $wc_report->start_date;
+$enddate = $wc_report->end_date;
 
 $startdate = gmdate("Y-m-d" , $startdate);
 $enddate = gmdate("Y-m-d", $enddate);
@@ -51,15 +55,15 @@ $ttax = '';
         <div class="stats_range">
             <h4 style="margin-bottom: 1rem;">Choose your date range:</h4>
              <ul>
-                  <li class="time"><a href="<?php echo admin_url('admin.php?page=wc-nys-tax&amp;range=year');?>">Year</a>
+                  <li class="time <?php echo ($current_range == 'year') ? 'active' : '';?>"><a href="<?php echo admin_url('admin.php?page=wc-nys-tax&amp;range=year');?>">Year</a>
                        </li>
-                  <li class="time"><a href="<?php echo admin_url('admin.php?page=wc-nys-tax&amp;range=last_month');?>">Last month</a>
+                  <li class="time <?php echo ($current_range == 'last_month') ? 'active' : '';?>" id="last_month"><a href="<?php echo admin_url('admin.php?page=wc-nys-tax&amp;range=last_month');?>">Last month</a>
                        </li>
-                  <li class="time"><a href="<?php echo admin_url('admin.php?page=wc-nys-tax&amp;range=month');?>">This month</a>
+                  <li class="time <?php echo ($current_range == 'month') ? 'active' : '';?>" id="month"><a href="<?php echo admin_url('admin.php?page=wc-nys-tax&amp;range=month');?>">This month</a>
                        </li>
-                  <li class="time"><a href="<?php echo admin_url('admin.php?page=wc-nys-tax&amp;range=7day');?>">Last 7 days</a>
+                  <li class="time <?php echo ($current_range == '7day') ? 'active' : '';?>" id="7day"><a href="<?php echo admin_url('admin.php?page=wc-nys-tax&amp;range=7day');?>">Last 7 days</a>
                        </li>
-                  <li class="custom active">
+                  <li class="custom <?php echo ($current_range == 'custom') ? 'active' : '';?>">
                        Custom:
                        <form method="GET" class="inline">
                             <div class="inline">
@@ -80,10 +84,10 @@ $ttax = '';
                                     <span>&ndash;</span>
                                     <input type="text" size="11" placeholder="yyyy-mm-dd" value="<?php echo ( ! empty( $_GET['end_date'] ) ) ? esc_attr( wp_unslash( $_GET['end_date'] ) ) : ''; ?>" name="end_date" class="range_datepicker to" /><?php //@codingStandardsIgnoreLine ?>
                                     <button type="submit" class="button" value="<?php esc_attr_e( 'Go', 'wc-nys-tax' ); ?>"><?php esc_html_e( 'Go', 'wc-nys-tax' ); ?></button>
-                                    <?php wp_nonce_field( 'custom_range', 'wc_reports_nonce', false ); ?>
-                               </div>
-                            </form>
-                       </li>
+                               <?php wp_nonce_field( 'custom_range', 'wc_reports_nonce', false ); ?>
+                           </div>
+                    </form>
+               </li>
              </ul>
         </div>
         <table class="widefat" id="report">
