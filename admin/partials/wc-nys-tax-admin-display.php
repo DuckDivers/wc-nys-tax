@@ -22,10 +22,10 @@ if ( 'custom' == $current_range ) {
       exit;
     }
 }
+
 $Object = $wc_report->calculate_current_range($current_range);
 $startdate = $wc_report->start_date;
 $enddate = $wc_report->end_date;
-
 $startdate = gmdate("Y-m-d" , $startdate);
 $enddate = gmdate("Y-m-d", $enddate);
 
